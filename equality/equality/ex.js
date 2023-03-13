@@ -1,5 +1,71 @@
 // TODO: write `findAll(..)`
 
+const findAll2 = (value, arr) => {
+	const matchedArr = []
+
+	//my solution
+	for(let i = 0; i < arr.length; i++){
+		if(Object.is(arr[i], value)){
+			matchedArr.push(arr[i])
+			if(Object.is(value, -0) || isNaN(value)){
+				break;
+			}
+		}else if(
+			typeof value == 'string' &&
+			typeof arr[i] == 'number' &&
+			value != "" && 
+			!Object.is(arr[i], -0) &&
+			value == arr[i]
+		){
+			matchedArr.push(arr[i])
+		}else if(
+			typeof value == 'number' &&
+			Object.is(arr[i], String(value))
+		){
+			matchedArr.push(arr[i])
+		}else if(
+			value == null &&
+			arr[i] == null
+		){
+			matchedArr.push(arr[i])
+		}else if(
+			typeof value == 'boolean' &&
+			typeof arr[i] == 'boolean' &&
+			arr[i] == value
+		){
+			matchedArr.push(arr[i])
+		}
+	}
+	
+	console.log(matchedArr)
+	return matchedArr
+}
+
+const findAll = (value, arr) => {
+	const matchedArr = []
+
+	//solution
+	for(let v of arr){
+		if(Object.is(value, v)){
+			matchedArr.push(v)
+		}else if( value == null && v == null){
+			matchedArr.push(v)
+		}else if(typeof value == 'boolean' && typeof v == 'boolean' && value == v){
+			matchedArr.push(v)
+		}//have to be careful about -0 here, the Object.is above only protects against -0 if they are both -0. Otherwise -0 as a string
+		//just turns into 0 which will become the same as 0 
+		else if (typeof value == "string" && value.trim() != "" && typeof v == "number" && !Object.is(-0,v) && value == v) {
+			
+				matchedArr.push(v);
+			
+		  }else if (typeof value == "number" && !Object.is(value,-0) && !Object.is(value,NaN) && !Object.is(value,Infinity) && !Object.is(value,-Infinity) && typeof v == "string" && v.trim() != "" && value == v) {
+				matchedArr.push(v);
+		  }
+	}
+	
+	
+	return matchedArr
+}
 
 
 // tests:
