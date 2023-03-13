@@ -44,6 +44,7 @@ const findAll2 = (value, arr) => {
 const findAll = (value, arr) => {
 	const matchedArr = []
 
+	//you should try to be as aware of your types as possible, use these different type guards in the various situations you need them. 
 	//solution
 	for(let v of arr){
 		if(Object.is(value, v)){
@@ -59,7 +60,11 @@ const findAll = (value, arr) => {
 				matchedArr.push(v);
 			
 		  }else if (typeof value == "number" && !Object.is(value,-0) && !Object.is(value,NaN) && !Object.is(value,Infinity) && !Object.is(value,-Infinity) && typeof v == "string" && v.trim() != "" && value == v) {
-				matchedArr.push(v);
+				//The nested if statement here is to show that because the surface area of corner cases has been taken care of above that this 
+				//== can be trusted.  
+				if(value == v){
+					matchedArr.push(v);
+				}
 		  }
 	}
 	
