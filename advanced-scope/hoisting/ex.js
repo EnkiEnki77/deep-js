@@ -1,6 +1,7 @@
-//Utilize function hoisting to have all executable code at the top of your program, and functions at the bottom.
-//In places where function expressions are used (callbacks are function expressions, because they are being used as a value
-//assigned to a param) The function expression should only be inlined if it utilizes lexical variables of the surrounding scope.
+//Utilize function hoisting to have all executable code at the top of your program, variables should be at very top, because hoisting with 
+//variables is generally undesirable and functions at the bottom.
+//In places where function expressions are used (callbacks are function expressions, because they are being used as a value assigned to a
+// param) The function expression should only be inlined if it utilizes lexical variables of the surrounding scope 
 //Otherwise they should be taken out into the outermost scope they can as declarations, and passed in by identifier. All of this makes things
 //more readable.
 
@@ -13,9 +14,11 @@ console.log("----");
 remindUnpaid(currentEnrollment);
 
 function getStudentFromId(studentId) {
-	return studentRecords.find(function matchId(record){
+	return studentRecords.find(matchId);
+
+	function matchId(record){
 		return (record.id == studentId);
-	});
+	}
 }
 
 function sortByNameAsc(record1,record2){
