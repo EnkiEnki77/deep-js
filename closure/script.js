@@ -145,4 +145,32 @@ var workshop = (function Module(teacher){
 
 workshop.ask(',this is a module, right?')//Kyle, this is a module, right?
 
+//The idea is that you have some hidden state, that cannot be accessed from the outside, but the functions that have closure over them
+//can, and you make those functions accessible in an object you return. 
+
+//The whole purpose of a module is to track/change state over time. 
+
+//If you have a "module" that doesnt have any state, or it doesnt change, than its not a module. 
+
+//The point of a module is you have some stuff you have closure over and you are controlling access to it by exposing a minimal API. 
+
+//The principle of minimal exposure is in full effect here. 
+
+//You have modules which can only be called once like the IIFE module above, but you can also use function declaration to make them reusable.
+//These are known as factory functions. 
+
+function Module(teacher){
+    var publicAPI = {ask, }
+    return publicAPI
+
+
+    function ask(question){
+        console.log(teacher, question)
+    }
+}
+
+var workshop = Module('Kyle') 
+
+workshop.ask(',this is a module, right?')//Kyle, this is a module, right?
+
 

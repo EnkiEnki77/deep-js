@@ -3,7 +3,7 @@
 //In places where function expressions are used (callbacks are function expressions, because they are being used as a value assigned to a
 // param) The function expression should only be inlined if it utilizes lexical variables of the surrounding scope 
 //Otherwise they should be taken out into the outermost scope they can as declarations, and passed in by identifier. All of this makes things
-//more readable.
+//more readable. This is because it is easier to understand scopes when they are flatter, they more nested, the more confusing. 
 
 
 printRecords(currentEnrollment);

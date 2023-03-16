@@ -171,8 +171,71 @@ function formatString(str){
 //variables are determined to exist in that scope at compile time, before the program ever runs. This is one of the main aspects of 
 //lexical scope. 
 
-console.log(student);
+student;
 teacher;
 var student = 'you';
 var teacher = 'Kyle';
+
+//Function declarations are hoisted, but function expressions are not, because expressions are being used as a value. If you attempt
+//to utilize the function expressions identifier the function has not yet been assigned to that identifier, so you get a type error
+//for putting parens on an undefined variable.
+
+teacher() //kyle
+otherTeacher() //Type error
+
+//Functions declarations are put into the scope plan at compile time, so the js engine knows about them at run time due to lexical scope
+function teacher(){ 
+    return "kyle"
+}
+
+//Only the identifier of function expressions are put into the scope plan at compile time, so since function expressions are used as values
+//they cant be called until theyve been assigned to their identifier. 
+var otherTeacher = function(){
+    return "suzy"
+}
+
+
+
+//To really engrain the JS has a two pass system take this example. 
+
+var teacher = 'Kyle'
+otherTeacher()
+
+function otherTeacher(){
+    //You would think the console log below would look for teacher in the scope of its function and not find it, because the declaration
+    //for teacher in the function comes after the console log, so it would go to global and log the teacher there, but actually it
+    //would log undefined. This again is because of the way lexical scope works, the engine already knows there should be a teacher 
+    //identifier attached to the scope of that function, it just hasnt been assigned a value yet. 
+    console.log(teacher)
+    var teacher = 'Suzy'
+}
+
+//Before any executable code is run, the js engine already knows about every scope and every variable that should exist in those scopes. 
+
+//Now var hoisting is generally not preferred, but function hoisting can be useful. For example it can be more readable to put all your 
+//executable code at the top and your functions at the bottom of your program. 
+
+
+
+//There is this myth that let and const dont get hoisted, this is false. The compiler adds let and const variables into the scope plan just
+//the same as var. It does not discriminate declarations. The difference is that var is functionally hoisted, and let/const are block hoisted.
+//As well as that when the compiler is making the scope plan it puts in the plan that var should be initialized with undefined, and let/
+//const should be left uninitialized. The engine still knows that these let and const variables exist in that scope though. Here's an example
+//proving they are hoisted.
+
+var teacher = "Kyle"
+
+{
+    console.log(teacher) //TDZ error because they engine knew about the let teacher below, due to the compiler scope plan. 
+    let teacher = "Suzy"
+}
+
+//The reason TDZ exists academically is for const, because if const was initialized with undefined and then later assigned another value,
+//that would go against the principles of const. So they made it where you cant observe a variable before its declared And then TC39 decided 
+//might as well do it for let as well.
+
+//Rule of thumb, put all your let's and const's at the top of your blocks of code, dont string them throughout. 
+
+//Remember declarative code, such as the declaration of a variable or function is handled at compile time, but executable code 
+//such as referencing a variable for its value, assigning a value to a variable, or executing a function are all handled at runtime. 
 
